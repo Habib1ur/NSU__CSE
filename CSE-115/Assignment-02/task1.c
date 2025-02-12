@@ -2,13 +2,14 @@
 #include <math.h>
 int main()
 {
-    double x;
+    float x, sum;
     printf("Enter x value: ");
-    scanf("%lf", &x);
-    float sum = pow(3, x) + (x * x) - (12 * x) - 12;
+    scanf("%f", &x);
+    sum = pow(x, 3) + pow(x, 2) - (12 * x) - 12;
     if (sum >= 0)
     {
-        printf("The answer is : %.2f", sqrt(sum));
+        float result = sqrt(sum);
+        printf("The answer is : %.2f", result);
     }
     else
     {
