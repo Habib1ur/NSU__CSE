@@ -1,1 +1,0 @@
- int sum = sqrt(pow(3, x) + x * x - 12 * x - 12);
