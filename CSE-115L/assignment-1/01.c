@@ -1,5 +1,3 @@
-// Q: Write a program that computes the summation of the following series using for loop: 10000+2000+400+...+8
-
 #include <stdio.h>
 
 int main()
