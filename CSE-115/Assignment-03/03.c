@@ -1,12 +1,19 @@
 #include <stdio.h>
-#include<math.h>
 
-int main()
-{
-    int a,x,z;
-    printf("Enter the value for Base(a) and Power(x): ");
-    scanf("%d%d",&a,&x);
-    z=pow(a,x);
-    printf("%d^%d: %d",a,x,z);
+int main() {
+    int a, x;
+    long result = 1;
+
+    printf("Enter the base value a: ");
+    scanf("%d", &a);
+    printf("Enter the exponent value x: ");
+    scanf("%d", &x);
+
+    for (int i = 0; i < x; ++i) {
+        result *= a;
+    }
+
+    printf("%d ^ %d is: %ld\n", a, x, result);
+
     return 0;
 }
