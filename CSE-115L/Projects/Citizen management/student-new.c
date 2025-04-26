@@ -4,16 +4,14 @@
 
 #define MAX 100
 
-typedef struct
-{
+typedef struct {
     int id;
     char name[50];
     int class;
     int teacherID;
 } Student;
 
-typedef struct
-{
+typedef struct {
     int id;
     char name[50];
     char password[20];
@@ -38,14 +36,12 @@ void viewStudents();
 void addTeacher();
 void viewTeachers();
 
-int main()
-{
+int main() {
     loadStudents();
     loadTeachers();
 
     int choice;
-    while (1)
-    {
+    while (1) {
         printf("\n==== Student Management System ====\n");
         printf("1. Admin Login\n");
         printf("2. Teacher Login\n");
@@ -53,25 +49,16 @@ int main()
         printf("Choose: ");
         scanf("%d", &choice);
 
-        if (choice == 1)
-        {
-            if (loginAsAdmin())
-                adminMenu();
-        }
-        else if (choice == 2)
-        {
+        if (choice == 1) {
+            if (loginAsAdmin()) adminMenu();
+        } else if (choice == 2) {
             int teacherID = loginAsTeacher();
-            if (teacherID != -1)
-                teacherMenu(teacherID);
-        }
-        else if (choice == 3)
-        {
+            if (teacherID != -1) teacherMenu(teacherID);
+        } else if (choice == 3) {
             saveStudents();
             saveTeachers();
             break;
-        }
-        else
-        {
+        } else {
             printf("Invalid option.\n");
         }
     }
@@ -80,65 +67,53 @@ int main()
 }
 
 // ===================== File I/O ======================
-void loadStudents()
-{
+void loadStudents() {
     FILE *f = fopen("students.txt", "r");
-    if (f == NULL)
-        return;
+    if (f == NULL) return;
     studentCount = 0;
     while (fscanf(f, "%d %s %d %d", &students[studentCount].id, students[studentCount].name,
-                  &students[studentCount].class, &students[studentCount].teacherID) != EOF)
-    {
+           &students[studentCount].class, &students[studentCount].teacherID) != EOF) {
         studentCount++;
     }
     fclose(f);
 }
 
-void saveStudents()
-{
+void saveStudents() {
     FILE *f = fopen("students.txt", "w");
-    for (int i = 0; i < studentCount; i++)
-    {
+    for (int i = 0; i < studentCount; i++) {
         fprintf(f, "%d %s %d %d\n", students[i].id, students[i].name,
                 students[i].class, students[i].teacherID);
     }
     fclose(f);
 }
 
-void loadTeachers()
-{
+void loadTeachers() {
     FILE *f = fopen("teachers.txt", "r");
-    if (f == NULL)
-        return;
+    if (f == NULL) return;
     teacherCount = 0;
     while (fscanf(f, "%d %s %s", &teachers[teacherCount].id, teachers[teacherCount].name,
-                  teachers[teacherCount].password) != EOF)
-    {
+           teachers[teacherCount].password) != EOF) {
         teacherCount++;
     }
     fclose(f);
 }
 
-void saveTeachers()
-{
+void saveTeachers() {
     FILE *f = fopen("teachers.txt", "w");
-    for (int i = 0; i < teacherCount; i++)
-    {
+    for (int i = 0; i < teacherCount; i++) {
         fprintf(f, "%d %s %s\n", teachers[i].id, teachers[i].name, teachers[i].password);
     }
     fclose(f);
 }
 
 // ===================== Login ======================
-int loginAsAdmin()
-{
+int loginAsAdmin() {
     char user[20], pass[20];
     printf("Enter Admin Username: ");
     scanf("%s", user);
     printf("Enter Password: ");
     scanf("%s", pass);
-    if (strcmp(user, "admin") == 0 && strcmp(pass, "admin") == 0)
-    {
+    if (strcmp(user, "admin") == 0 && strcmp(pass, "admin") == 0) {
         printf("Login successful.\n");
         return 1;
     }
@@ -146,18 +121,15 @@ int loginAsAdmin()
     return 0;
 }
 
-int loginAsTeacher()
-{
+int loginAsTeacher() {
     int id;
     char pass[20];
     printf("Enter Teacher ID: ");
     scanf("%d", &id);
     printf("Enter Password: ");
     scanf("%s", pass);
-    for (int i = 0; i < teacherCount; i++)
-    {
-        if (teachers[i].id == id && strcmp(teachers[i].password, pass) == 0)
-        {
+    for (int i = 0; i < teacherCount; i++) {
+        if (teachers[i].id == id && strcmp(teachers[i].password, pass) == 0) {
             printf("Login successful. Welcome, %s.\n", teachers[i].name);
             return id;
         }
@@ -167,11 +139,9 @@ int loginAsTeacher()
 }
 
 // ===================== Admin Menu ======================
-void adminMenu()
-{
+void adminMenu() {
     int choice;
-    while (1)
-    {
+    while (1) {
         printf("\n--- Admin Menu ---\n");
         printf("1. Add Teacher\n");
         printf("2. View Teachers\n");
@@ -181,57 +151,41 @@ void adminMenu()
         printf("Choose: ");
         scanf("%d", &choice);
 
-        if (choice == 1)
-            addTeacher();
-        else if (choice == 2)
-            viewTeachers();
-        else if (choice == 3)
-            addStudent();
-        else if (choice == 4)
-            viewStudents();
-        else if (choice == 5)
-            break;
-        else
-            printf("Invalid choice.\n");
+        if (choice == 1) addTeacher();
+        else if (choice == 2) viewTeachers();
+        else if (choice == 3) addStudent();
+        else if (choice == 4) viewStudents();
+        else if (choice == 5) break;
+        else printf("Invalid choice.\n");
     }
 }
 
 // ===================== Teacher Menu ======================
-void teacherMenu(int teacherID)
-{
+void teacherMenu(int teacherID) {
     int choice;
-    while (1)
-    {
+    while (1) {
         printf("\n--- Teacher Menu ---\n");
         printf("1. View My Students\n");
         printf("2. Back to Main Menu\n");
         printf("Choose: ");
         scanf("%d", &choice);
 
-        if (choice == 1)
-        {
+        if (choice == 1) {
             printf("Students under Teacher ID %d:\n", teacherID);
-            for (int i = 0; i < studentCount; i++)
-            {
-                if (students[i].teacherID == teacherID)
-                {
+            for (int i = 0; i < studentCount; i++) {
+                if (students[i].teacherID == teacherID) {
                     printf("ID: %d, Name: %s, Class: %d\n", students[i].id,
                            students[i].name, students[i].class);
                 }
             }
-        }
-        else if (choice == 2)
-            break;
-        else
-            printf("Invalid choice.\n");
+        } else if (choice == 2) break;
+        else printf("Invalid choice.\n");
     }
 }
 
 // ===================== Core Functions ======================
-void addStudent()
-{
-    if (studentCount >= MAX)
-    {
+void addStudent() {
+    if (studentCount >= MAX) {
         printf("Student limit reached.\n");
         return;
     }
@@ -248,21 +202,17 @@ void addStudent()
     printf("Student added successfully.\n");
 }
 
-void viewStudents()
-{
+void viewStudents() {
     printf("\nList of All Students:\n");
-    for (int i = 0; i < studentCount; i++)
-    {
+    for (int i = 0; i < studentCount; i++) {
         printf("ID: %d, Name: %s, Class: %d, Teacher ID: %d\n",
                students[i].id, students[i].name,
                students[i].class, students[i].teacherID);
     }
 }
 
-void addTeacher()
-{
-    if (teacherCount >= MAX)
-    {
+void addTeacher() {
+    if (teacherCount >= MAX) {
         printf("Teacher limit reached.\n");
         return;
     }
@@ -277,11 +227,9 @@ void addTeacher()
     printf("Teacher added successfully.\n");
 }
 
-void viewTeachers()
-{
+void viewTeachers() {
     printf("\nList of Teachers:\n");
-    for (int i = 0; i < teacherCount; i++)
-    {
+    for (int i = 0; i < teacherCount; i++) {
         printf("ID: %d, Name: %s\n", teachers[i].id, teachers[i].name);
     }
 }
